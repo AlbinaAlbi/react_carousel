@@ -4,10 +4,10 @@ import Carousel from './components/Carousel';
 
 interface State {
   images: string[];
-  step: number;
-  frameSize: number;
-  itemWidth: number;
-  animationDuration: number;
+  step: string;
+  frameSize: string;
+  itemWidth: string;
+  animationDuration: string;
   isInfinite: boolean;
 }
 
@@ -25,10 +25,10 @@ class App extends React.Component<{}, State> {
       './img/9.png',
       './img/10.png',
     ],
-    step: 3,
-    frameSize: 3,
-    itemWidth: 130,
-    animationDuration: 1000,
+    step: '3',
+    frameSize: '3',
+    itemWidth: '130',
+    animationDuration: '1000',
     isInfinite: true,
   };
 
@@ -63,49 +63,67 @@ class App extends React.Component<{}, State> {
           itemWidth={itemWidth}
           animationDuration={animationDuration}
           infinite={isInfinite}
+
         />
 
         <form className="imput-container">
           <div className="imput-container__items">
-            <label htmlFor="step">Item-width</label>
+            <label htmlFor="itemId">Item-width</label>
             <input
               type="number"
               name="itemWidth"
               id="itemId"
               value={itemWidth}
-              onChange={this.handleInputChange}
+              onChange={e =>
+                this.setState({ ...this.state, itemWidth: e.target.value })
+              }
             />
           </div>
 
           <div className="imput-container__items">
-            <label htmlFor="step">Frame-size</label>
+            <label htmlFor="frameId">Frame-size</label>
             <input
               type="number"
               name="frameSize"
               id="frameId"
               value={frameSize}
-              onChange={this.handleInputChange}
+              onChange={e =>
+                this.setState({ ...this.state, frameSize: e.target.value })
+              }
             />
           </div>
 
           <div className="imput-container__items">
-            <label htmlFor="step">Step</label>
-            <input type="number" name="step" id="stepId" value={step} />
+            <label htmlFor="stepId">Step</label>
+            <input
+              type="number"
+              name="step"
+              id="stepId"
+              value={step}
+              onChange={e =>
+                this.setState({ ...this.state, step: e.target.value })
+              }
+            />
           </div>
 
           <div className="imput-container__items">
-            <label htmlFor="step">Animation-duration</label>
+            <label htmlFor="animationDuration">Animation-duration</label>
             <input
               type="number"
               name="animationDuration"
               id="animationDuration"
               value={animationDuration}
-              onChange={this.handleInputChange}
+              onChange={e =>
+                this.setState({
+                  ...this.state,
+                  animationDuration: e.target.value,
+                })
+              }
             />
           </div>
 
           <div className="imput-container__items">
-            <label htmlFor="step">Infinite</label>
+            <label htmlFor="isInfinite">Infinite</label>
             <input
               type="checkbox"
               name="Infinite"

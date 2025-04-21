@@ -3,10 +3,10 @@ import './Carousel.scss';
 
 interface CarouselProps {
   images: string[];
-  step: number;
-  frameSize: number;
-  itemWidth: number;
-  animationDuration: number;
+  step: string;
+  frameSize: string;
+  itemWidth: string;
+  animationDuration: string;
   infinite: boolean;
 }
 
@@ -17,23 +17,23 @@ const Carousel: React.FC<CarouselProps> = ({
   itemWidth,
   animationDuration,
   infinite,
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+}): JSX.Element => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const arrImg = Array.from(images);
+  const arrImg = [...images];
   const totalIndex = arrImg.length;
   const gapImg = 20;
 
-  const stepSize = itemWidth + gapImg;
+  const stepSize = +itemWidth + +gapImg;
   const transformList = currentIndex * stepSize;
 
-  const arrLastImg = Math.max(totalIndex - frameSize, 0);
-  const disabledButtonNext = currentIndex >= arrLastImg && !infinite;
-  const disabledButtonPrev = currentIndex <= 0 && !infinite;
+  const arrLastImg = Math.max(totalIndex - +frameSize, 0);
+  const disabledButtonNext = +currentIndex >= arrLastImg && !infinite;
+  const disabledButtonPrev = +currentIndex <= 0 && !infinite;
 
   const handlePrev = () => {
-    if (currentIndex >= step) {
-      setCurrentIndex(currentIndex - step);
+    if (+currentIndex >= +step) {
+      setCurrentIndex(currentIndex - +step);
     } else if (currentIndex > 0) {
       setCurrentIndex(0);
     } else if (infinite) {
@@ -42,8 +42,8 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   const handleNext = () => {
-    if (currentIndex + step <= arrLastImg) {
-      setCurrentIndex(currentIndex + step);
+    if (+currentIndex + +step <= arrLastImg) {
+      setCurrentIndex(+currentIndex + +step);
     } else if (currentIndex < arrLastImg) {
       setCurrentIndex(arrLastImg);
     } else if (infinite) {
@@ -57,6 +57,7 @@ const Carousel: React.FC<CarouselProps> = ({
         <button
           className={`Carousel__button ${disabledButtonPrev ? 'Carousel__button--disabled' : ''}`}
           type="button"
+          data-cy="prev"
           onClick={handlePrev}
           disabled={disabledButtonPrev}
         >
@@ -65,7 +66,7 @@ const Carousel: React.FC<CarouselProps> = ({
         <ul
           className="Carousel__list"
           style={{
-            width: '430px',
+            width: +itemWidth * +frameSize,
             gap: '20px',
           }}
         >
@@ -82,7 +83,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className="Carousel__img--img"
                 src={`${img}`}
                 alt={`${index + 1}`}
-                style={{ width: '130px' }}
+                width={itemWidth}
               />
             </li>
           ))}
